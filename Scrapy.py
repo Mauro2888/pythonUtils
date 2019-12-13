@@ -23,4 +23,21 @@ class HeadphonesSpider(scrapy.Spider):
         
         with open('urls.csv', 'w') as f:
             for u in body_urls:
+                
+from bs4 import BeautifulSoup as bs
+import requests
+
+
+url = "https://www.flipkart.com/laptops/~buyback-guarantee-on-laptops-/pr?sid=6bo%2Cb5g&uniqBStoreParam1=val1&wid=11.productCard.PMU_V2."
+request_call = requests.get(url)
+content = bs(request_call.text, "html.parser")
+titolo = content.findAll("div", {"class": "_3wU53n"})
+prezzo = content.findAll("div", {"class": "_1vC4OE _2rQ-NK"})
+prezzo_precedente = content.findAll("div", {"class": "_3auQ3N _2GcJzG"})
+
+for tit in titolo:
+    for prz in prezzo:
+        for prz_prc in prezzo_precedente:
+            print(tit.text + " " + prz.text + " " + prz_prc.text)
+
           
